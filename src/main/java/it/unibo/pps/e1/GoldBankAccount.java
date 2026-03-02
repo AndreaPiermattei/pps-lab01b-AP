@@ -12,11 +12,8 @@ public class GoldBankAccount extends BaseBankAccount{
     }
 
     @Override
-    public void withdraw(int amount) {
+    protected boolean checkIfWithdrawIsPossible(int withdraw) {
         int overdraftLimit = -500;
-        if ((this.getBalance() - amount)<overdraftLimit) {
-            throw new IllegalStateException();
-        }
-        base.withdraw(amount + applyFee(amount));
+        return (this.getBalance() - withdraw)<overdraftLimit;
     }
 }

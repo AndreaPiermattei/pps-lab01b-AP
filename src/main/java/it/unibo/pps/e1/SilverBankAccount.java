@@ -13,12 +13,7 @@ public class SilverBankAccount extends BaseBankAccount {
     }
 
     @Override
-    public void withdraw(int amount) {
-        if (this.getBalance() < amount) {
-            throw new IllegalStateException();
-        }
-        base.withdraw(amount + applyFee(amount));
+    protected boolean checkIfWithdrawIsPossible(int withdraw) {
+        return this.getBalance() < withdraw;
     }
-
-
 }

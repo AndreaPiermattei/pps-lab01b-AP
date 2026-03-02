@@ -19,6 +19,13 @@ public abstract class BaseBankAccount implements BankAccount {
 
     protected abstract int applyFee(int amount);
 
+    protected abstract boolean checkIfWithdrawIsPossible(int withdraw);
+
     @Override
-    public abstract void withdraw(int amount);
+    public void withdraw(int amount){
+        if (checkIfWithdrawIsPossible(amount)) {
+            throw new IllegalStateException();
+        }
+        base.withdraw(amount + applyFee(amount));
+    }
 }
