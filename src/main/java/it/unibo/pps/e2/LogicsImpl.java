@@ -16,7 +16,13 @@ public class LogicsImpl implements Logics {
     }
 
     /**
-     * this is supposed to be used only for debugging
+     * !WARNING!
+     * this method
+     * should be used
+     * only while
+     * testing the
+     * logic
+     *
      * @param size
      * @param xKnight
      * @param yKnight

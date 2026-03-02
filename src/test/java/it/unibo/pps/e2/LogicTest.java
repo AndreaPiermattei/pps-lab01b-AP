@@ -31,27 +31,47 @@ public class LogicTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0,1,true",
-            "1,0,true",
-            "3,0,true",
-            "4,1,true",
-            "0,3,true",
-            "1,4,true",
-            "4,3,true",
-            "3,4,true",
-            "0,0,false",
-            "1,1,false",
-            "3,3,false",
-            "4,4,false",
-            "2,4,false",
-            "4,2,false",
-            "2,0,false",
-            "0,2,false",//TODO: put every possible scenario
+            "-1,0",
+            "5,3",
+            "3,5",
+            "2,-5",
+            "7,7",
+            "-1,-1"
     })
-    public void checkHitWithPawn(final int xPawn,final int yPawn, final boolean expectedResult){
+    public void checkIncorrectInputForHit(final int xSelected,final int ySelected){
+        logicToTest=new LogicsImpl(SIZE);
+        assertThrows(IndexOutOfBoundsException.class,()->logicToTest.hit(xSelected,ySelected));
+    }
 
+    @ParameterizedTest
+    @CsvSource({
+            "0,1,0,1,true,true",
+            "1,0,1,0,true,true",
+            "3,0,3,0,true,true",
+            "4,1,4,1,true,true",
+            "0,3,0,3,true,true",
+            "1,4,1,4,true,true",
+            "4,3,4,3,true,true",
+            "3,4,3,4,true,true",
+            //above: cases of success hit
+            "3,4,0,0,false,true",
+            //above: cases of failed hit but correct movement
+            "0,0,0,0,false,false",
+            "1,1,1,1,false,false",
+            "3,3,3,3,false,false",
+            "4,4,4,4,false,false",
+            "2,4,2,4,false,false",
+            "4,2,4,2,false,false",
+            "2,0,2,0,false,false",
+            "0,2,0,2,false,false",
+            //above: cases of incorrect movement inside the board
+            //TODO: put every possible scenario from starting position of knight (2,2)
+    })
+    public void checkBehaviourOfHit(final int xSelected,final int ySelected,final int xPawn,final int yPawn, final boolean expectedHitResult,final boolean expectedMovementResult){
         logicToTest=new LogicsImpl(SIZE,2,2,xPawn,yPawn);
-        assertEquals(expectedResult,logicToTest.hit(xPawn,yPawn));
+        boolean hitResult = logicToTest.hit(xSelected,ySelected);
+        assertAll(()->assertEquals(expectedHitResult,hitResult),
+                ()->assertEquals(expectedMovementResult,logicToTest.hasKnight(xSelected,ySelected)));
     }
 
 }
