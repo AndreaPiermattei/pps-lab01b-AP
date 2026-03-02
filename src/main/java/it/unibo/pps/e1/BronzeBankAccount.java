@@ -1,25 +1,25 @@
 package it.unibo.pps.e1;
 
-public class SilverBankAccount implements BankAccount {
+public class BronzeBankAccount implements BankAccount{
 
     private CoreBankAccount base;
 
-    public SilverBankAccount(CoreBankAccount base) {
+    public BronzeBankAccount(CoreBankAccount base) {
         this.base = base;
-    }
-
-    private int applyFee(int amount){
-        return 1;
     }
 
     @Override
     public int getBalance() {
-        return base.getBalance();
+        return this.base.getBalance();
     }
 
     @Override
     public void deposit(int amount) {
-        base.deposit(amount);
+        this.base.deposit(amount);
+    }
+
+    private int applyFee(int amount){
+        return amount < 100 ? 0 : 1;
     }
 
     @Override
