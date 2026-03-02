@@ -2,17 +2,19 @@ package it.unibo.pps.e1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GoldBankAccountTest {
 
-    private SilverBankAccount account;
+    private GoldBankAccount account;
 
     @BeforeEach
     void init(){
-        this.account = new SilverBankAccount(new CoreBankAccount());
+        this.account = new GoldBankAccount(new CoreBankAccount());
     }
 
     @Test
@@ -22,21 +24,30 @@ public class GoldBankAccountTest {
 
     @Test
     public void testCanDeposit() {
-        this.account.deposit(1000);
-        assertEquals(1000, this.account.getBalance());
+        int deposit = 1000;
+        this.account.deposit(deposit);
+        assertEquals(deposit, this.account.getBalance());
     }
 
-    @Test
-    public void testCanWithdraw() {
-        this.account.deposit(1000);
-        this.account.withdraw(200);
-        assertEquals(799, this.account.getBalance());
+    @ParameterizedTest
+    @CsvSource({
+            "1000, 200",
+            "1000, 1500",
+            "1000, 1200"
+    })
+    public void testCanWithdraw(int initialBalance,int withdrawAmount) {
+        this.account.deposit(initialBalance);
+        this.account.withdraw(withdrawAmount);
+        assertEquals(initialBalance-withdrawAmount, this.account.getBalance());
     }
+
 
     @Test
     public void testCannotWithdrawMoreThanAvailable(){
-        this.account.deposit(1000);
-        assertThrows(IllegalStateException.class, () -> this.account.withdraw(1200));
+        int initialBalance = 1000;
+        int withdrawAmount = 1600;
+        this.account.deposit(initialBalance);
+        assertThrows(IllegalStateException.class, () -> this.account.withdraw(withdrawAmount));
     }
 
 }
