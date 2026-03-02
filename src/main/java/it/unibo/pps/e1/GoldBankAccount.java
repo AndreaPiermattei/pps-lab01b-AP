@@ -1,29 +1,22 @@
 package it.unibo.pps.e1;
 
-public class GoldBankAccount implements BankAccount{
-
-    private CoreBankAccount base;
+public class GoldBankAccount extends BaseBankAccount{
 
     public GoldBankAccount(CoreBankAccount base) {
-        this.base = base;
+        super(base);
     }
 
     @Override
-    public int getBalance() {
-        return this.base.getBalance();
-    }
-
-    @Override
-    public void deposit(int amount) {
-        this.base.deposit(amount);
+    protected int applyFee(int amount) {
+        return 0;
     }
 
     @Override
     public void withdraw(int amount) {
         int overdraftLimit = -500;
-        if ((this.getBalance()-amount)<overdraftLimit){
+        if ((this.getBalance() - amount)<overdraftLimit) {
             throw new IllegalStateException();
         }
-        this.base.withdraw(amount);
+        base.withdraw(amount + applyFee(amount));
     }
 }

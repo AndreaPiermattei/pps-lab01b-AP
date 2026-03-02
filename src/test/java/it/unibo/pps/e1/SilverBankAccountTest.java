@@ -22,21 +22,26 @@ public class SilverBankAccountTest {
 
     @Test
     public void testCanDeposit() {
-        this.account.deposit(1000);
-        assertEquals(1000, this.account.getBalance());
+        int deposit = 1000;
+        this.account.deposit(deposit);
+        assertEquals(deposit, this.account.getBalance());
     }
 
     @Test
     public void testCanWithdraw() {
-        this.account.deposit(1000);
-        this.account.withdraw(200);
-        assertEquals(799, this.account.getBalance());
+        int initialBalance = 1000;
+        int withdrawAmount = 200;
+        this.account.deposit(initialBalance);
+        this.account.withdraw(withdrawAmount);
+        assertEquals(initialBalance-withdrawAmount-1, this.account.getBalance());
     }
 
     @Test
     public void testCannotWithdrawMoreThanAvailable(){
-        this.account.deposit(1000);
-        assertThrows(IllegalStateException.class, () -> this.account.withdraw(1200));
+        int initialBalance = 1000;
+        int withdrawAmount = 1100;
+        this.account.deposit(initialBalance);
+        assertThrows(IllegalStateException.class, () -> this.account.withdraw(withdrawAmount));
     }
 
 }
