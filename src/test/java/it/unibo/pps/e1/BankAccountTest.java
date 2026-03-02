@@ -1,6 +1,5 @@
 package it.unibo.pps.e1;
 
-import it.unibo.pps.e1.BankAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankAccountTest {
 
-    private BankAccount account;
+    private SilverBankAccount account;
 
     @BeforeEach
     void init(){
-        this.account = new BankAccount();
+        this.account = new SilverBankAccount(new CoreBankAccount());
     }
 
     @Test
