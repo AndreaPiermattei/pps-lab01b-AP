@@ -6,14 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SilverBankAccountTest {
+public class SilverBankAccountTest extends BaseBankAccountTest{
 
-    private SilverBankAccount account;
 
     @BeforeEach
-    void init(){
-        this.account = new SilverBankAccount(new CoreBankAccount());
-    }
+    void init(){this.account = new SilverBankAccount(new CoreBankAccount());}
 
     @Test
     public void testInitiallyEmpty() {

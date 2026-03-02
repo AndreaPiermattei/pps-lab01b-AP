@@ -8,25 +8,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BronzeBankAccountTest {
-
-    private BronzeBankAccount account;
+public class BronzeBankAccountTest extends BaseBankAccountTest {
 
     @BeforeEach
     void init(){
         this.account = new BronzeBankAccount(new CoreBankAccount());
-    }
-
-    @Test
-    public void testInitiallyEmpty() {
-        assertEquals(0, this.account.getBalance());
-    }
-
-    @Test
-    public void testCanDeposit() {
-        int deposit = 1000;
-        this.account.deposit(deposit);
-        assertEquals(deposit, this.account.getBalance());
     }
 
     @ParameterizedTest
