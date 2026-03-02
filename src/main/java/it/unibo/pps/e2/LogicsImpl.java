@@ -14,6 +14,30 @@ public class LogicsImpl implements Logics {
         this.pawn = this.randomEmptyPosition();
         this.knight = this.randomEmptyPosition();	
     }
+
+    /**
+     * this is supposed to be used only for debugging
+     * @param size
+     * @param xKnight
+     * @param yKnight
+     * @param xPawn
+     * @param yPawn
+     */
+    public LogicsImpl(int size,final int xKnight, final int yKnight, final int xPawn, final int yPawn){
+        if((xPawn == xKnight)&&(yPawn == yKnight)){
+            throw new IllegalArgumentException();
+        }
+        this.size = size;
+        if (xKnight<0 || yKnight<0 || xKnight >= this.size || yKnight >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (xPawn<0 || yPawn<0 || xPawn >= this.size || yPawn >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        this.pawn = new Pair<>(xPawn,yPawn);
+        this.knight =new Pair<>(xKnight,yKnight);
+    }
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
@@ -45,4 +69,5 @@ public class LogicsImpl implements Logics {
 	public boolean hasPawn(int row, int col) {
 		return this.pawn.equals(new Pair<>(row,col));
 	}
+
 }
